@@ -1,0 +1,41 @@
+* {
+  margin: 0 auto;
+}
+
+body {
+  background-color: #dadde2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#boardContainer {
+  display: grid;
+  grid-template-columns: repeat(19, 0fr);
+}
+
+.tile {
+  width: 50px;
+  height: 50px;
+}
+
+.tile-space {
+  background-color: #dadde2;
+}
+
+.tile-wall {
+  background-color: grey;
+}
+
+.tile-goal {
+  background-image: url("images/goal.png");
+  background-size: cover;
+}
+
+.entity-block {
+  background-image: url("images/brick-wall.jpg");
+}
+
+.entity-player {
+  background-image: url("images/Character.png");
+  background-size: cover;
+}
