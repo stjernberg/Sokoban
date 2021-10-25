@@ -1,9 +1,12 @@
 const gameBoard = document.getElementById("boardContainer");
+let score = 0;
+document.getElementById("score").innerHTML = "Score: " + score;
+const maxScore = 2;
+
 const playerPosition = {
   x: 0,
   y: 0,
 };
-const goals = 0;
 
 const createGameBoard = () => {
   for (let col = 0; col < tileMap01.height; col++) {
@@ -42,41 +45,40 @@ const createGameBoard = () => {
   }
 };
 
-const arrowKeys = (e) => {
-  //console.log("event", e);
-  switch (e.keyCode) {
+const arrowKeys = (event) => {
+  event.preventDefault();
+  switch (event.keyCode) {
     case 38:
       // up arrow
-      console.log("up");
       movePlayer(0, -1);
       break;
     case 40:
       // down arrow
       movePlayer(0, 1);
-      console.log("down");
       break;
     case 37:
       //  left arrow
       movePlayer(-1, 0);
-      console.log("left");
       break;
     case 39:
       // right arrow
       movePlayer(1, 0);
-      console.log("right");
       break;
   }
 };
 
 const movePlayer = (x, y) => {
-  let nextPosition = document.getElementById(
-    playerPosition.x + x + "," + (playerPosition.y + y)
-  );
-
+  //Current position of the player
   let currentPosition = document.getElementById(
     playerPosition.x + "," + playerPosition.y
   );
 
+  //Next position of the player
+  let nextPosition = document.getElementById(
+    playerPosition.x + x + "," + (playerPosition.y + y)
+  );
+
+  //Next position of the block
   let nextBlockPosition = document.getElementById(
     playerPosition.x + x * 2 + "," + (playerPosition.y + y * 2)
   );
@@ -88,13 +90,25 @@ const movePlayer = (x, y) => {
         nextBlockPosition.classList.contains("entity-block")
       )
     ) {
-      nextBlockPosition.classList.add("entity-block");
+      if (nextBlockPosition.classList.contains("tile-goal")) {
+        nextBlockPosition.classList.add("entity-block-goal");
+        score++;
+        document.getElementById("score").innerHTML = "Score: " + score;
+      } else {
+        nextBlockPosition.classList.add("entity-block");
+      }
+
       nextPosition.classList.remove("entity-block");
       nextPosition.classList.add("entity-player");
       currentPosition.classList.remove("entity-player");
-
       playerPosition.x += x;
       playerPosition.y += y;
+    }
+  } else if (nextPosition.classList.contains("entity-block-goal")) {
+    if (!nextBlockPosition.classList.contains("tile-wall")) {
+      nextBlockPosition.classList.add("entity-block-goal");
+      nextPosition.classList.remove("entity-block-goal");
+      nextPosition.classList.add("tile-goal");
     }
   } else {
     if (!nextPosition.classList.contains("tile-wall")) {
@@ -104,6 +118,12 @@ const movePlayer = (x, y) => {
       playerPosition.y += y;
     }
   }
+
+  if (score == maxScore) {
+    document.getElementById("won").innerHTML = "Game over, you won!";
+  }
 };
+
+// const reset = () => {};
 
 createGameBoard();
