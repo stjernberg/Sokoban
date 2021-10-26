@@ -1,7 +1,7 @@
 const gameBoard = document.getElementById("boardContainer");
 let score = 0;
 document.getElementById("score").innerHTML = "Score: " + score;
-const maxScore = 2;
+const maxScore = 6;
 
 const playerPosition = {
   x: 0,
@@ -12,7 +12,7 @@ const newGame = () => {
   gameBoard.innerHTML = "";
   document.getElementById("won").innerHTML = "";
   score = 0;
-  document.getElementById("score").innerHTML = "Score: " + "";
+  document.getElementById("score").innerHTML = "Score: " + score;
   createGameBoard();
 };
 
