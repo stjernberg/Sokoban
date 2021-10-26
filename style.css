@@ -29,9 +29,18 @@ p {
   font-size: 20px;
   display: inline-block;
   margin-bottom: 30px;
+  margin-right: 80px;
   text-align: center;
 }
 
+button {
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  border: none;
+  background: #0d71b9;
+  cursor: pointer;
+}
 h2 {
   color: blue;
   font-size: 30px;
@@ -69,4 +78,5 @@ h2 {
 
 .entity-block-goal {
   background-image: url("images/galler.jpg");
+  background-size: cover;
 }

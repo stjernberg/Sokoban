@@ -10,10 +10,19 @@
 </head>
 
 <body>
-  <main>
-    <div id="boardContainer"></div>
 
+  <header>
+    <h1>Sokoban</h1>
+    <h2 id="won"></h2>
+  </header>
+
+  <main id="boardContainer">
   </main>
+
+  <footer>
+    <p id="score"></p>
+    <button onclick=newGame()>New Game</button>
+  </footer>
 
   <script src="sokobanBase.js"></script>
   <script src="game.js"></script>

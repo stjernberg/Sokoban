@@ -8,6 +8,14 @@ const playerPosition = {
   y: 0,
 };
 
+const newGame = () => {
+  gameBoard.innerHTML = "";
+  document.getElementById("won").innerHTML = "";
+  score = 0;
+  document.getElementById("score").innerHTML = "Score: " + "";
+  createGameBoard();
+};
+
 const createGameBoard = () => {
   for (let col = 0; col < tileMap01.height; col++) {
     for (let row = 0; row < tileMap01.width; row++) {
@@ -78,22 +86,36 @@ const movePlayer = (x, y) => {
     playerPosition.x + x + "," + (playerPosition.y + y)
   );
 
-  //Next position of the block
+  //Next position of the block and used in the goal area
   let nextBlockPosition = document.getElementById(
     playerPosition.x + x * 2 + "," + (playerPosition.y + y * 2)
+  );
+
+  //Position used in the goal area
+  let thirdPosition = document.getElementById(
+    playerPosition.x + x * 3 + "," + (playerPosition.y + y * 3)
   );
 
   if (nextPosition.classList.contains("entity-block")) {
     if (
       !(
         nextBlockPosition.classList.contains("tile-wall") ||
-        nextBlockPosition.classList.contains("entity-block")
+        nextBlockPosition.classList.contains("entity-block") ||
+        nextBlockPosition.classList.contains("entity-block-goal")
       )
     ) {
       if (nextBlockPosition.classList.contains("tile-goal")) {
-        nextBlockPosition.classList.add("entity-block-goal");
-        score++;
-        document.getElementById("score").innerHTML = "Score: " + score;
+        if (!thirdPosition.classList.contains("entity-block-goal")) {
+          thirdPosition.classList.add("entity-block-goal");
+          thirdPosition.classList.remove("tile-goal");
+          score++;
+          document.getElementById("score").innerHTML = "Score: " + score;
+        } else {
+          nextBlockPosition.classList.add("entity-block-goal");
+          nextBlockPosition.classList.remove("tile-goal");
+          score++;
+          document.getElementById("score").innerHTML = "Score: " + score;
+        }
       } else {
         nextBlockPosition.classList.add("entity-block");
       }
@@ -104,14 +126,14 @@ const movePlayer = (x, y) => {
       playerPosition.x += x;
       playerPosition.y += y;
     }
-  } else if (nextPosition.classList.contains("entity-block-goal")) {
-    if (!nextBlockPosition.classList.contains("tile-wall")) {
-      nextBlockPosition.classList.add("entity-block-goal");
-      nextPosition.classList.remove("entity-block-goal");
-      nextPosition.classList.add("tile-goal");
-    }
   } else {
-    if (!nextPosition.classList.contains("tile-wall")) {
+    if (
+      !(
+        nextPosition.classList.contains("tile-wall") ||
+        nextPosition.classList.contains("tile-goal") ||
+        nextPosition.classList.contains("entity-block-goal")
+      )
+    ) {
       nextPosition.classList.add("entity-player");
       currentPosition.classList.remove("entity-player");
       playerPosition.x += x;
@@ -123,7 +145,5 @@ const movePlayer = (x, y) => {
     document.getElementById("won").innerHTML = "Game over, you won!";
   }
 };
-
-// const reset = () => {};
 
 createGameBoard();
