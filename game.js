@@ -22,9 +22,9 @@ const createGameBoard = () => {
       const oneTile = document.createElement("div");
       oneTile.classList.add("tile");
       oneTile.id = row + "," + col;
-      const cell = tileMap01.mapGrid[col][row].toString();
+      //const cell = tileMap01.mapGrid[col][row].toString();
 
-      switch (cell) {
+      switch (tileMap01.mapGrid[col][row][0]) {
         case " ":
           oneTile.classList.add("tile-space");
           break;
@@ -130,7 +130,6 @@ const movePlayer = (x, y) => {
     if (
       !(
         nextPosition.classList.contains("tile-wall") ||
-        nextPosition.classList.contains("tile-goal") ||
         nextPosition.classList.contains("entity-block-goal")
       )
     ) {
